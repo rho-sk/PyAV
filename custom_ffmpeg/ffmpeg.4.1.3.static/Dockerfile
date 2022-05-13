@@ -17,7 +17,7 @@ RUN chmod +x /app/build-ffmpeg
 COPY patch /tmp/ffmpeg_patch/
 
 ENV FFMPEG_VERSION=4.1.3
-RUN AUTOINSTALL=yes /app/build-ffmpeg --build --full-static
+RUN AUTOINSTALL=yes /app/build-ffmpeg --build --full-static --enable-gpl-and-non-free
 
 # Check shared library
 RUN ! ldd /app/workspace/bin/ffmpeg
