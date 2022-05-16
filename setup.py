@@ -184,7 +184,7 @@ package_data = {".".join(pckg.parts): ["*.pxd"] for pckg in package_folders}
 
 
 setup(
-    name="av",
+    name="av-sts",
     version=about["__version__"],
     description="Pythonic bindings for FFmpeg's libraries.",
     author="Mike Boers",

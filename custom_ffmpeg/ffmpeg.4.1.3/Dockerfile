@@ -597,3 +597,4 @@ RUN \
           sed "s:${PREFIX}:/usr/local:g" <"$pc" >/usr/local/lib/pkgconfig/"${pc##*/}"; \
         done
 
+RUN  apt-get install -y python3-dev python3-virtualenv screen mc
