@@ -350,10 +350,8 @@ cdef extern from "libavcodec/avcodec.h" nogil:
 
         int64_t pos
 
-        bint synced
-        uint64_t last_rtcp_ntp_time
-        uint32_t last_rtcp_timestamp
-        uint32_t timestamp
+        uint64_t rtp_ntp_time_stamp
+
 
 
     cdef int avcodec_fill_audio_frame(

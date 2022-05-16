@@ -201,32 +201,10 @@ cdef class Packet(Buffer):
 
     # RTSP internals from patch
 
-    property rtcp_synced:
-        """
-        :type: bint
-        """
-        def __get__(self):
-            return self.ptr.synced
-
-
-    property rtcp_last_ntp_time:
+    property rtp_ntp_time_stamp:
         """
         :type: uint64_t
         """
         def __get__(self):
-            return self.ptr.last_rtcp_ntp_time
-
-    property rtcp_last_ts:
-        """
-        :type: uint32_t
-        """
-        def __get__(self):
-            return self.ptr.last_rtcp_timestamp
-
-    property rtcp_ts:
-        """
-        :type: uint32_t
-        """
-        def __get__(self):
-            return self.ptr.timestamp
+            return self.ptr.rtp_ntp_time_stamp
 
