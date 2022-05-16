@@ -198,3 +198,35 @@ cdef class Packet(Buffer):
 
     property is_corrupt:
         def __get__(self): return bool(self.ptr.flags & lib.AV_PKT_FLAG_CORRUPT)
+
+    # RTSP internals from patch
+
+    property rtcp_synced:
+        """
+        :type: bint
+        """
+        def __get__(self):
+            return self.ptr.synced
+
+
+    property rtcp_last_ntp_time:
+        """
+        :type: uint64_t
+        """
+        def __get__(self):
+            return self.ptr.last_rtcp_ntp_time
+
+    property rtcp_last_ts:
+        """
+        :type: uint32_t
+        """
+        def __get__(self):
+            return self.ptr.last_rtcp_timestamp
+
+    property rtcp_ts:
+        """
+        :type: uint32_t
+        """
+        def __get__(self):
+            return self.ptr.timestamp
+
