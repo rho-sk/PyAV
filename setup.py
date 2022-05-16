@@ -184,9 +184,9 @@ package_data = {".".join(pckg.parts): ["*.pxd"] for pckg in package_folders}
 
 
 setup(
-    name="av-sts",
+    name="av-ntp-ts",
     version=about["__version__"],
-    description="Pythonic bindings for FFmpeg's libraries.",
+    description="Pythonic bindings for FFmpeg's libraries. Patched version for RTP time stamp in the AVPacket",
     author="Mike Boers",
     author_email="pyav@mikeboers.com",
     url="https://github.com/PyAV-Org/PyAV",
