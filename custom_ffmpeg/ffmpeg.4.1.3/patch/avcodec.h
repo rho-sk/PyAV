@@ -1465,14 +1465,14 @@ typedef struct AVPacket {
 
     int64_t pos;                            ///< byte position in stream, -1 if unknown
 
-    /**
-     * [RHO: 16/05/2022]
-     * RTP NTP internals
-     */
     uint32_t timestamp;
+
     uint64_t last_rtcp_ntp_time;
+
     uint32_t last_rtcp_timestamp;
+
     uint16_t seq;
+
     bool synced;
 
 
@@ -2447,7 +2447,7 @@ typedef struct AVCodecContext {
     int rc_initial_buffer_occupancy;
 
 #if FF_API_CODER_TYPE
-    #define FF_CODER_TYPE_VLC       0
+#define FF_CODER_TYPE_VLC       0
 #define FF_CODER_TYPE_AC        1
 #define FF_CODER_TYPE_RAW       2
 #define FF_CODER_TYPE_RLE       3
@@ -2630,7 +2630,7 @@ typedef struct AVCodecContext {
 #define FF_DEBUG_MB_TYPE     8
 #define FF_DEBUG_QP          16
 #if FF_API_DEBUG_MV
-    /**
+/**
  * @deprecated this option does nothing
  */
 #define FF_DEBUG_MV          32
@@ -2642,7 +2642,7 @@ typedef struct AVCodecContext {
 #define FF_DEBUG_MMCO        0x00000800
 #define FF_DEBUG_BUGS        0x00001000
 #if FF_API_DEBUG_MV
-    #define FF_DEBUG_VIS_QP      0x00002000
+#define FF_DEBUG_VIS_QP      0x00002000
 #define FF_DEBUG_VIS_MB_TYPE 0x00004000
 #endif
 #define FF_DEBUG_BUFFERS     0x00008000
@@ -2759,7 +2759,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by libavcodec.
      * - decoding: Set by user.
      */
-    int bits_per_coded_sample;
+     int bits_per_coded_sample;
 
     /**
      * Bits per sample/pixel of internal libavcodec pixel/sample format.
@@ -2861,14 +2861,14 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: unused
      */
-    int nsse_weight;
+     int nsse_weight;
 
     /**
      * profile
      * - encoding: Set by user.
      * - decoding: Set by libavcodec.
      */
-    int profile;
+     int profile;
 #define FF_PROFILE_UNKNOWN -99
 #define FF_PROFILE_RESERVED -100
 
@@ -2978,7 +2978,7 @@ typedef struct AVCodecContext {
      * - encoding: Set by user.
      * - decoding: Set by libavcodec.
      */
-    int level;
+     int level;
 #define FF_LEVEL_UNKNOWN -99
 
     /**
@@ -3094,7 +3094,7 @@ typedef struct AVCodecContext {
      * - encoding: unused
      * - decoding: Set by user.
      */
-    int lowres;
+     int lowres;
 #endif
 
     /**
@@ -4781,8 +4781,8 @@ int avcodec_decode_audio4(AVCodecContext *avctx, AVFrame *frame,
  */
 attribute_deprecated
 int avcodec_decode_video2(AVCodecContext *avctx, AVFrame *picture,
-                          int *got_picture_ptr,
-                          const AVPacket *avpkt);
+                         int *got_picture_ptr,
+                         const AVPacket *avpkt);
 
 /**
  * Decode a subtitle message.
@@ -4812,8 +4812,8 @@ int avcodec_decode_video2(AVCodecContext *avctx, AVFrame *picture,
  * @param[in] avpkt The input AVPacket containing the input buffer.
  */
 int avcodec_decode_subtitle2(AVCodecContext *avctx, AVSubtitle *sub,
-                             int *got_sub_ptr,
-                             AVPacket *avpkt);
+                            int *got_sub_ptr,
+                            AVPacket *avpkt);
 
 /**
  * Supply raw packet data as input to a decoder.
@@ -5251,7 +5251,7 @@ typedef struct AVCodecParser {
 const AVCodecParser *av_parser_iterate(void **opaque);
 
 attribute_deprecated
-        AVCodecParser *av_parser_next(const AVCodecParser *c);
+AVCodecParser *av_parser_next(const AVCodecParser *c);
 
 attribute_deprecated
 void av_register_codec_parser(AVCodecParser *parser);
@@ -5543,18 +5543,18 @@ int avcodec_get_pix_fmt_loss(enum AVPixelFormat dst_pix_fmt, enum AVPixelFormat 
  * @return The best pixel format to convert to or -1 if none was found.
  */
 enum AVPixelFormat avcodec_find_best_pix_fmt_of_list(const enum AVPixelFormat *pix_fmt_list,
-                                                     enum AVPixelFormat src_pix_fmt,
-                                                     int has_alpha, int *loss_ptr);
+                                            enum AVPixelFormat src_pix_fmt,
+                                            int has_alpha, int *loss_ptr);
 
 /**
  * @deprecated see av_find_best_pix_fmt_of_2()
  */
 enum AVPixelFormat avcodec_find_best_pix_fmt_of_2(enum AVPixelFormat dst_pix_fmt1, enum AVPixelFormat dst_pix_fmt2,
-                                                  enum AVPixelFormat src_pix_fmt, int has_alpha, int *loss_ptr);
+                                            enum AVPixelFormat src_pix_fmt, int has_alpha, int *loss_ptr);
 
 attribute_deprecated
 enum AVPixelFormat avcodec_find_best_pix_fmt2(enum AVPixelFormat dst_pix_fmt1, enum AVPixelFormat dst_pix_fmt2,
-                                              enum AVPixelFormat src_pix_fmt, int has_alpha, int *loss_ptr);
+                                            enum AVPixelFormat src_pix_fmt, int has_alpha, int *loss_ptr);
 
 enum AVPixelFormat avcodec_default_get_format(struct AVCodecContext *s, const enum AVPixelFormat * fmt);
 

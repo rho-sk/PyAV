@@ -6,6 +6,10 @@ from av.utils cimport avrational_to_fraction, to_avrational
 
 from av import deprecation
 
+from libc.stdint cimport (
+    uint32_t
+)
+
 
 cdef class Packet(Buffer):
 
@@ -201,10 +205,38 @@ cdef class Packet(Buffer):
 
     # RTSP internals from patch
 
-    property rtp_ntp_time_stamp:
+    property rtcp_synced:
+        """
+        :type: bint
+        """
+        def __get__(self):
+            return self.ptr.synced
+
+
+    property rtcp_last_ntp_time:
         """
         :type: uint64_t
         """
         def __get__(self):
-            return self.ptr.rtp_ntp_time_stamp
+            return self.ptr.last_rtcp_ntp_time
 
+    property rtcp_last_timestamp:
+        """
+        :type: uint32_t
+        """
+        def __get__(self):
+            return self.ptr.last_rtcp_timestamp
+
+    property rtcp_timestamp:
+        """
+        :type: uint32_t
+        """
+        def __get__(self):
+            return self.ptr.timestamp
+
+    property rtcp_seq:
+        """
+        :type: uint16_t
+        """
+        def __get__(self):
+            return self.ptr.seq

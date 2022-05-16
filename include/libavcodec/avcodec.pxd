@@ -350,7 +350,11 @@ cdef extern from "libavcodec/avcodec.h" nogil:
 
         int64_t pos
 
-        uint64_t rtp_ntp_time_stamp
+        uint32_t timestamp
+        uint64_t last_rtcp_ntp_time
+        uint32_t last_rtcp_timestamp
+        uint16_t seq
+        bint synced
 
 
 

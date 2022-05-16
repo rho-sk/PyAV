@@ -15,7 +15,7 @@ RUN     apt-get -yqq update && \
         apt-get clean -y
 
 
-ENV         FFMPEG_VERSION=4.1.6 \
+ENV         FFMPEG_VERSION=4.1.3 \
     AOM_VERSION=v1.0.0 \
     CHROMAPRINT_VERSION=1.5.0 \
     FDKAAC_VERSION=0.1.5 \
@@ -516,9 +516,6 @@ RUN  \
 
 # PATCH
 COPY patch /tmp/ffmpeg_patch/
-# change it to incrementally apply some changes from this point
-RUN echo 'Patching 16.5.2022 20:22'
-RUN echo 'Patching 16.5.2022 20:22'
 
 # Install patch for FFMPEG which exposes timestamp in AVPacket \
 RUN \
