@@ -1470,7 +1470,8 @@ typedef struct AVPacket {
      * RTP NTP internals
      */
     uint32_t timestamp;
-    uint64_t last_rtcp_ntp_time;
+    uint32_t last_rtcp_ntp_time_l;
+    uint32_t last_rtcp_ntp_time_h;
     uint32_t last_rtcp_timestamp;
     uint16_t seq;
     bool synced;

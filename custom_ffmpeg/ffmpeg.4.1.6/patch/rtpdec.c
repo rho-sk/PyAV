@@ -635,10 +635,12 @@ static void finalize_packet(RTPDemuxContext *s, AVPacket *pkt, uint32_t timestam
      */
     if (s->last_rtcp_ntp_time != AV_NOPTS_VALUE && s->last_rtcp_timestamp) {
         synced = true;
-        pkt->last_rtcp_ntp_time = s->last_rtcp_ntp_time;
+        pkt->last_rtcp_ntp_time_l = (uint32_t)s->last_rtcp_ntp_time;
+        pkt->last_rtcp_ntp_time_h = (uint32_t)(s->last_rtcp_ntp_time>>32);
         pkt->last_rtcp_timestamp = s->last_rtcp_timestamp;
     } else {
-        pkt->last_rtcp_ntp_time = 0;
+        pkt->last_rtcp_ntp_time_l = 0;
+        pkt->last_rtcp_ntp_time_h = 0;
         pkt->last_rtcp_timestamp = 0;
     }
 

@@ -517,8 +517,7 @@ RUN  \
 # PATCH
 COPY patch /tmp/ffmpeg_patch/
 # change it to incrementally apply some changes from this point
-RUN echo 'Patching 16.5.2022 20:22'
-RUN echo 'Patching 16.5.2022 20:22'
+RUN echo 'Patching 16.5.2022 20:41'
 
 # Install patch for FFMPEG which exposes timestamp in AVPacket \
 RUN \

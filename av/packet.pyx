@@ -213,12 +213,20 @@ cdef class Packet(Buffer):
             return self.ptr.synced
 
 
-    property rtcp_last_ntp_time:
+    property rtcp_last_ntp_time_l:
         """
-        :type: uint64_t
+        :type: uint32_t
         """
         def __get__(self):
-            return self.ptr.last_rtcp_ntp_time
+            return self.ptr.last_rtcp_ntp_time_l
+
+    property rtcp_last_ntp_time_h:
+        """
+        :type: uint32_t
+        """
+        def __get__(self):
+            return self.ptr.last_rtcp_ntp_time_h
+
 
     property rtcp_last_timestamp:
         """
