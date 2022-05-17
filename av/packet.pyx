@@ -248,3 +248,10 @@ cdef class Packet(Buffer):
         """
         def __get__(self):
             return self.ptr.seq
+
+    property frame_timestamp:
+        """
+        :type: double
+        """
+        def __get__(self):
+            return self.ptr.frame_timestamp

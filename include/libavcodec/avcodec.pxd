@@ -356,6 +356,7 @@ cdef extern from "libavcodec/avcodec.h" nogil:
         uint32_t last_rtcp_timestamp
         uint16_t seq
         bint synced
+        double frame_timestamp
 
 
 

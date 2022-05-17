@@ -20,6 +20,7 @@
  */
 
 #include <stdbool.h>
+#include <sys/time.h>
 
 #include "libavutil/mathematics.h"
 #include "libavutil/avstring.h"
@@ -32,6 +33,11 @@
 #include "url.h"
 #include "rtpdec.h"
 #include "rtpdec_formats.h"
+
+#ifndef NTP_OFFSET
+#define NTP_OFFSET 2208988800ULL
+#endif
+
 
 #define MIN_FEEDBACK_INTERVAL 200000 /* 200 ms in us */
 
@@ -587,6 +593,37 @@ void ff_rtp_parse_set_crypto(RTPDemuxContext *s, const char *suite,
         s->srtp_enabled = 1;
 }
 
+
+static void ntp2tv(uint64_t *ntp, struct timeval *tv)
+{
+    uint64_t aux = 0;
+    uint8_t *p = (uint8_t *)ntp + 8;
+    int i;
+
+    /* we get the ntp in network byte order, so we must
+     * convert it to host byte order. */
+    for (i = 0; i < 4; i++) {
+        aux <<= 8;
+        aux |= *--p;
+    }
+
+    /* now we have in aux the NTP seconds offset */
+    aux -= NTP_OFFSET;
+    tv->tv_sec = aux;
+
+    /* let's go with the fraction of second */
+    aux = 0;
+    for (; i < 8; i++) {
+        aux <<= 8;
+        aux |= *--p;
+    }
+
+    /* now we have in aux the NTP fraction (0..2^32-1) */
+    aux *= 1000000; /* multiply by 1e6 */
+    aux >>= 32;     /* and divide by 2^32 */
+    tv->tv_usec = aux;
+}
+
 /**
  * This was the second switch in rtp_parse packet.
  * Normalizes time, if required, sets stream_index, etc.
@@ -638,10 +675,15 @@ static void finalize_packet(RTPDemuxContext *s, AVPacket *pkt, uint32_t timestam
         pkt->last_rtcp_ntp_time_l = (uint32_t)(s->last_rtcp_ntp_time & 0xFFFFFFFF);
         pkt->last_rtcp_ntp_time_h = (uint32_t)(s->last_rtcp_ntp_time >> 32);
         pkt->last_rtcp_timestamp = s->last_rtcp_timestamp;
+        struct timeval tv;
+        ntp2tv(&s->last_rtcp_ntp_time, &tv);
+        double rtp_diff = (double)(s->timestamp - s->last_rtcp_timestamp) / 90000.0;
+        pkt->frame_timestamp = (double)tv.tv_sec + (double)tv.tv_usec / 1000000.0 + rtp_diff;
     } else {
         pkt->last_rtcp_ntp_time_l = 0;
         pkt->last_rtcp_ntp_time_h = 0;
         pkt->last_rtcp_timestamp = 0;
+        pkt->frame_timestamp = 0.0;
     }
 
     pkt->seq = s->seq;
